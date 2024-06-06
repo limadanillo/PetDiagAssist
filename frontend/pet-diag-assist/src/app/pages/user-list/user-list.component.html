@@ -1,0 +1,112 @@
+<nb-layout>
+
+  <nb-layout-header>
+    <nb-sidebar-toggle style="width:100vw"></nb-sidebar-toggle>
+  </nb-layout-header>
+
+  <nb-sidebar left tag="left" state="expanded">
+    <nb-menu-services></nb-menu-services>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary">
+      <nb-card-header>Listagem de Usuários</nb-card-header>
+      <nb-card-body>
+<!--        <nb-table>-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th>Nome</th>-->
+<!--            <th>Email</th>-->
+<!--            <th>Role</th>-->
+<!--            <th>Ações</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr *ngFor="let user of users">-->
+<!--            <td>{{ user.name }}</td>-->
+<!--            <td>{{ user.email }}</td>-->
+<!--            <td>{{ user.role }}</td>-->
+<!--            <td>-->
+<!--              <button nbButton size="small" status="info">Editar</button>-->
+<!--              <button nbButton size="small" status="danger">Excluir</button>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </nb-table>-->
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+          <tr *ngFor="let user of users?.content">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.isActive }}</td>
+            <td>
+              <div class="row actionGrp">
+                <div class="col">
+                  <button type="button" (click)="userUpdateModal(dialogUpdate,user.publicId)" nbButton status="success">
+                    <nb-icon icon="edit-outline"></nb-icon>
+                  </button>
+                </div>
+                <div class="col">
+                  <button type="button" (click)="deleteUser(user.publicId)" nbButton status="danger">
+                    <nb-icon icon="trash-outline"></nb-icon>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+    </nb-card>
+    <ng-template #dialogUpdate let-data let-ref="dialogUpdate">
+      <nb-card [nbSpinner]="loadingModalCreate" nbSpinnerStatus="primary" >
+        <nb-card-header>Update Usuário</nb-card-header>
+        <nb-card-body>
+          <nb-form-field>
+            <form  [formGroup]="updateUserForm" (ngSubmit)="updateUser($event)">
+              <div class="form-group row">
+                <label for="nameUpdate" class="label col-sm-3 col-form-label">Name</label>
+                <div class="col-sm-9">
+                  <input class="col" nbInput type="text" name="nameUpdate"  formControlName="nameUpdate"  id="nameUpdate">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="emailUpdate" class="label col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                  <input class="col" nbInput type="email" name="emailUpdate" id="emailUpdate" formControlName="emailUpdate" >
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="roleUpdate" class="label col-sm-3 col-form-label">Role</label>
+                <div class="col-sm-9">
+                  <input class="col" nbInput type="text" name="roleUpdate" formControlName="roleUpdate" id="roleUpdate">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="roleUpdate" class="label col-sm-3 col-form-label">Role</label>
+                <div class="col-sm-9">
+                  <input class="col" nbInput type="text" name="statusUpdate" formControlName="statusUpdate" id="status">
+                </div>
+              </div>
+              <hr style="width: calc(100% + 48px);margin-left: -24px;">
+              <div class=" modaleBth row">
+                <div class="col">
+                  <button nbButton (click)="closeUpdate()">Cancel</button>
+                </div>
+                <div class="col">
+                  <button type="submit" nbButton status="success">Update</button>
+                </div>
+              </div>
+            </form>
+          </nb-form-field>
+        </nb-card-body>
+      </nb-card>
+    </ng-template>
+  </nb-layout-column>
+</nb-layout>

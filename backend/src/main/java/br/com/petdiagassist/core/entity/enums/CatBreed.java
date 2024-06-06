@@ -1,0 +1,27 @@
+package br.com.petdiagassist.core.entity.enums;
+
+public enum CatBreed {
+    ABYSSINIAN,
+    AMERICAN_BOBTAIL,
+    AMERICAN_CURL,
+    AMERICAN_SHORTHAIR,
+    AMERICAN_WIREHAIR,
+    BALINESE,
+    BENGAL,
+    BIRMAN,
+    BOMBAY,
+    BRITISH_SHORTHAIR,
+    BURMESE,
+    BURMILLA,
+    CHARTREUX,
+    CORNISH_REX,
+    DEVON_REX,
+    EGYPTIAN_MAU,
+    EXOTIC,
+    HAVANA_BROWN,
+    HIMALAYAN,
+    JAPANESE_BOBTAIL,
+    KORAT,
+    LA_PERM,
+    OTHER
+}

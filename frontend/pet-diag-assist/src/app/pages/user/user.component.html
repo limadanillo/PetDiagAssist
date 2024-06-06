@@ -1,0 +1,67 @@
+<nb-layout>
+
+  <nb-layout-header>
+    <nb-sidebar-toggle style="width:100vw;"></nb-sidebar-toggle>
+  </nb-layout-header>
+
+  <nb-sidebar left tag="left" state="expanded" responsive>
+    <nb-menu-services></nb-menu-services>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary">
+      <nb-card-body class="example-items-col">
+        <h2>Dados do Usuário</h2>
+        <form [formGroup]="userForm" class="user-form">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="email">Email</label>
+              <input nbInput type="email" id="email" formControlName="email" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="password">Senha</label>
+              <input [type]="getInputType()" nbInput type="password" id="password" formControlName="password" placeholder="Password" class="form-control">
+              <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
+                         pack="eva"
+                         [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                </nb-icon>
+              </button>
+              <label for="password">Confirme a Senha</label>
+              <input [type]="getInputType()" nbInput type="password" id="password-confirmed" formControlName="password" placeholder="Confirme a senha" class="form-control">
+              <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
+                         pack="eva"
+                         [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                </nb-icon>
+              </button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="role">Role</label>
+              <input nbInput type="text" id="role" [value]="user.role" disabled class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="info-professional"  >Info Profissional</label>
+              <input nbInput type="text" id="info-professional" [value]="getVetInfo()" disabled class="form-control">
+              <button nbSuffix nbButton ghost (click)="openVeterinaryDialog()">
+                <nb-icon icon='edit-2-outline' pack="eva"></nb-icon>
+              </button>
+              <button nbSuffix nbButton ghost (click)="openVeterinaryDialog()">
+                <nb-icon icon='trash-2-outline' pack="eva"></nb-icon>
+              </button>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <button type="submit" nbButton status="success"  (click)="updateUser($event)">Salvar</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+
+</nb-layout>

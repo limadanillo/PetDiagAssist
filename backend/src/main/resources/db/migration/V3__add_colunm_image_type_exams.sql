@@ -1,0 +1,2 @@
+ALTER TABLE exams
+ADD COLUMN image_type VARCHAR(10);

@@ -1,0 +1,73 @@
+version: '3.7'
+
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_HOST=pgsql
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_NAME=pet-diag-assist-db
+      - DATABASE_PORT=5432
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - /tmp:/var/lib/app
+    depends_on:
+      - pgsql
+
+  pgsql:
+    container_name: pgsql
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: pet-diag-assist-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./sgbd/postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: danillo.oliveira@cs.unicid.edu.br
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "16543:80"
+    volumes:
+      - ./sgbd/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - pgsql
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./sgbd/mongodb:/data/db:rw
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:latest
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: "mongodb://mongo:27017/"
+      ME_CONFIG_BASICAUTH_USERNAME: mongo
+      ME_CONFIG_BASICAUTH_PASSWORD: mongo
+    depends_on:
+      - mongo
+
+networks:
+  default:
+    name: pet-diag-assist-net
+    driver: bridge
